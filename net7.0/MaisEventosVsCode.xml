@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MaisEventosVsCode</name>
+    </assembly>
+    <members>
+        <member name="M:MaisEventosVsCode.Controllers.UsuarioController.Create(MaisEventosVsCode.Models.UsuarioTest)">
+            <summary>
+            Cadastrar usuários na aplicação
+            </summary>
+            <param name="usuarioTest">Dados do usuário</param>
+            <returns>Dados do usuário cadastrado</returns>
+        </member>
+        <member name="M:MaisEventosVsCode.Controllers.UsuarioController.Listar">
+            <summary>
+            Lista Todos Usuários da aplicação
+            </summary>
+            <returns>Lista de usuário</returns>
+        </member>
+        <member name="M:MaisEventosVsCode.Controllers.UsuarioController.Atualizar(System.Int32,MaisEventosVsCode.Models.UsuarioTest)">
+            <summary>
+            Altera os dados de um Usuário
+            </summary>
+            <param name="id"></param>
+            <param name="usuarioTests">Todas informações do Usuário</param>
+            <returns>Usuário Alterado</returns>
+        </member>
+        <member name="M:MaisEventosVsCode.Controllers.UsuarioController.Deletar(System.Int32)">
+            <summary>
+            Excluir um usuário da aplicaçao.
+            </summary>
+            <param name="id">Id do Usuário</param>
+            <returns>Mensagem de Exclusão</returns>
+        </member>
+        <member name="T:MaisEventosVsCode.Migrations.MaisEventosApi">
+            <inheritdoc />
+        </member>
+        <member name="M:MaisEventosVsCode.Migrations.MaisEventosApi.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MaisEventosVsCode.Migrations.MaisEventosApi.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MaisEventosVsCode.Migrations.MaisEventosApi.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
