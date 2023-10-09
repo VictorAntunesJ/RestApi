@@ -490,3 +490,6 @@ $RECYCLE.BIN/
 vscode
 README.md
 appsettings.json
+appsettings.Development
+MaisEventosVsCode
+net7.0
