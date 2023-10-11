@@ -488,7 +488,6 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 .vscode
 vscode
-README.md
 appsettings.json
 appsettings.Development
 MaisEventosVsCode

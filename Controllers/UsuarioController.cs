@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using MaisEventosVsCode.Context;
 using MaisEventosVsCode.Models;
-using MaisEventosVsCode.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaisEventosVsCode.Controllers
@@ -23,7 +22,7 @@ namespace MaisEventosVsCode.Controllers
             _context = context;
         }
 
-        private UsuarioRepository repositorio = new();
+
         /// <summary>
         /// Cadastrar usuários na aplicação
         /// </summary>
@@ -34,9 +33,9 @@ namespace MaisEventosVsCode.Controllers
         {
             try
             {
-                repositorio.Insert(usuarioTest);
+                _context.Add(usuarioTest);
+                _context.SaveChanges();
                 return Ok(usuarioTest);
-                //return Ok(usuarioTest);
             }
             catch (System.Exception ex)
             {
@@ -58,8 +57,14 @@ namespace MaisEventosVsCode.Controllers
         {
             try
             {
-               var usuarioTest = repositorio.GetAll();
-               return Ok(usuarioTest);
+                var usuarioTest = _context.usuarioTests.ToList();
+
+                if (usuarioTest == null || usuarioTest.Count == 0)
+                {
+                    return NotFound("Nenhum usuário encontrado.");
+                }
+
+                return Ok(usuarioTest);
             }
             catch (System.Exception ex)
             {
