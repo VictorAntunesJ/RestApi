@@ -9,11 +9,10 @@ namespace MaisEventosVsCode.Context
 {
     public class MaisEventosVsCodeContextApi : DbContext
     {
-        public MaisEventosVsCodeContextApi(DbContextOptions<MaisEventosVsCodeContextApi> options) : base(options)
-        {
-
-        }    
         public DbSet<UsuarioTest> usuarioTests { get; set; }
-   
+        public MaisEventosVsCodeContextApi(DbContextOptions<MaisEventosVsCodeContextApi> options) 
+            : base(options)
+        {
+        }    
     }
 }
