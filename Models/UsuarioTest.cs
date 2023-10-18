@@ -14,11 +14,13 @@ namespace MaisEventosVsCode.Models
         public string nome { get; set; }
 
        [Required(ErrorMessage = "Informe seu E-mail")]
-        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Informe um e-mail válido...")]
-        public string email { get; set; }
+       [RegularExpression(".+\\@.+\\..+")]
+       [EmailAddress(ErrorMessage = "Informe um e-mail válido.")]
+       
+        public string email { get; set; } = "exemplo@email.com";
         
        [Required(ErrorMessage = "Informe sua Senha")]
         [MinLength(8)]
-        public string senha { get; set; }
+        public string senha { get; set; } = "senha123";
     }
 }

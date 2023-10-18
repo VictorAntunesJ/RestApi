@@ -1,5 +1,8 @@
 using System.Reflection;
 using MaisEventosVsCode.Context;
+
+using MaisEventosVsCode.Interfaces;
+using MaisEventosVsCode.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -12,6 +15,8 @@ builder.Services.AddDbContext<MaisEventosVsCodeContextApi>(
         options.UseSqlServer(
             builder.Configuration.GetConnectionString("ConexaoPadrao")
         ));
+
+builder.Services.AddScoped<IUsuarioRepository, UsuarioTestRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

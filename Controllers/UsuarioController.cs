@@ -3,26 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MaisEventosVsCode.Context;
+using MaisEventosVsCode.Interfaces;
 using MaisEventosVsCode.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaisEventosVsCode.Controllers
 {
-
     [ApiController]
     [Route("[controller]")]
     public class UsuarioController : ControllerBase
     {
+        private readonly IUsuarioRepository _usuarioRepository;
 
-
-
-        private readonly MaisEventosVsCodeContextApi _context;
-        public UsuarioController(MaisEventosVsCodeContextApi context)
+        public UsuarioController(IUsuarioRepository usuarioRepository)
         {
-            _context = context;
+            _usuarioRepository = usuarioRepository;
         }
-
-
         /// <summary>
         /// Cadastrar usuários na aplicação
         /// </summary>
@@ -33,13 +29,12 @@ namespace MaisEventosVsCode.Controllers
         {
             try
             {
-                _context.Add(usuarioTest);
-                _context.SaveChanges();
+                // Use o repositório para inserir o usuário
+                _usuarioRepository.Insert(0, usuarioTest);
                 return Ok(usuarioTest);
             }
             catch (System.Exception ex)
             {
-
                 return StatusCode(500, new
                 {
                     msg = "Falha na Conexão!",
@@ -47,37 +42,28 @@ namespace MaisEventosVsCode.Controllers
                 });
             }
         }
-
         /// <summary>
-        /// Lista Todos Usuários da aplicação
+        /// Listar todos usuarios da aplicaçao
         /// </summary>
-        /// <returns>Lista de usuário</returns>
+        /// <param>Dados do usuário</param>
+        /// <returns>Dados do usuário cadastrado</returns>     
         [HttpGet]
         public IActionResult Listar()
         {
             try
             {
-                var usuarioTest = _context.usuarioTests.ToList();
-
-                if (usuarioTest == null || usuarioTest.Count == 0)
-                {
-                    return NotFound("Nenhum usuário encontrado.");
-                }
-
-                return Ok(usuarioTest);
+                var usuarios = _usuarioRepository.GetALL().ToList();
+                return Ok(usuarios);
             }
             catch (System.Exception ex)
             {
-
                 return StatusCode(500, new
                 {
                     msg = "Falha na Conexão!",
                     erro = ex.Message,
                 });
             }
-
         }
-
         /// <summary>
         /// Altera os dados de um Usuário
         /// </summary>
@@ -87,78 +73,41 @@ namespace MaisEventosVsCode.Controllers
         [HttpPut("{id}")]
         public IActionResult Atualizar(int id, UsuarioTest usuarioTests)
         {
-
-
             try
             {
-                var usuarioTestBanco = _context.usuarioTests.Find(id);
-
-                if (usuarioTestBanco == null)
-                    return NotFound("Item não encontrado com o ID fornecido.");
-
-                usuarioTestBanco.nome = usuarioTests.nome;
-                usuarioTestBanco.email = usuarioTests.email;
-                usuarioTestBanco.senha = usuarioTests.senha;
-
-                _context.usuarioTests.Update(usuarioTestBanco);
-                _context.SaveChanges();
-
-                return Ok(usuarioTestBanco);
-
-
-
+                var updateUsuarioTeste = _usuarioRepository.UpDate(id, usuarioTests);
+                return Ok(updateUsuarioTeste);
             }
             catch (System.Exception ex)
             {
-
                 return StatusCode(500, new
                 {
                     msg = "Falha na Conexão!",
                     erro = ex.Message,
                 });
             }
-
         }
-
-
         /// <summary>
         /// Excluir um usuário da aplicaçao.
         /// </summary>
         /// <param name="id">Id do Usuário</param>
         /// <returns>Mensagem de Exclusão</returns>
-
         [HttpDelete("{id}")]
         public IActionResult Deletar(int id)
         {
-
             try
             {
-                var usuarioTestsBanco = _context.usuarioTests.Find(id);
-
-                if (usuarioTestsBanco == null)
-                    return NotFound("Item não encontrado com o ID fornecido.");
-
-                _context.usuarioTests.Remove(usuarioTestsBanco);
-                _context.SaveChanges();
-
-                return Ok(new
-                {
-                    msg = "Usuário excluído com sucesso!!!"
-                });
-                /*var mensagem = new { Mensagem = "Usuário deletado com sucesso" };
-                return Ok(mensagem);*/
+               var DeletarUsuarioTeste = _usuarioRepository.Delete(id);
+               return Ok(DeletarUsuarioTeste);
             }
             catch (System.Exception ex)
             {
-
                 return StatusCode(500, new
                 {
                     msg = "Falha na Conexão!",
                     erro = ex.Message,
                 });
             }
-
         }
-
     }
 }

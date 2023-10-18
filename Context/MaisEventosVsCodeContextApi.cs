@@ -13,6 +13,11 @@ namespace MaisEventosVsCode.Context
         public MaisEventosVsCodeContextApi(DbContextOptions<MaisEventosVsCodeContextApi> options) 
             : base(options)
         {
-        }    
+        }
+
+        internal void Insert(UsuarioTest usuarioTest)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
