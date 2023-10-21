@@ -101,7 +101,7 @@ namespace MaisEventosVsCode.Controllers
                return Ok(DeletarUsuarioTeste);
             }
             catch (System.Exception ex)
-            {
+            { 
                 return StatusCode(500, new
                 {
                     msg = "Falha na Conexão!",
