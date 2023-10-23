@@ -35,6 +35,7 @@ namespace MaisEventosVsCode.Repository
             }
             _context.usuarioTests.Remove(usuarioTestsBanco);
             _context.SaveChanges();
+           
             return true;
         }
         public UsuarioTest GetById(int id)

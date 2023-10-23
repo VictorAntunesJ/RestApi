@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MaisEventosVsCode.Context;
 using MaisEventosVsCode.Interfaces;
 using MaisEventosVsCode.Models;
+using MaisEventosVsCode.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaisEventosVsCode.Controllers
@@ -25,10 +26,23 @@ namespace MaisEventosVsCode.Controllers
         /// <param name="usuarioTest">Dados do usuário</param>
         /// <returns>Dados do usuário cadastrado</returns>
         [HttpPost]
-        public IActionResult Create(UsuarioTest usuarioTest)
+        public IActionResult Create([FromForm] UsuarioTest usuarioTest, IFormFile arquivo)
         {
             try
             {
+                #region Upload de Imagem
+                string[] extensoesPermitidas = { "jpeg", "jpg", "png", "svg" };
+                string uploadResultado = Upload.UploadFile(arquivo, extensoesPermitidas, "Images");
+
+                if (uploadResultado == "")
+                {
+                    return BadRequest("Arquivo não encontrado ou extenção não permitida");
+                }
+
+                usuarioTest.Imagem = uploadResultado;
+
+                #endregion
+
                 // Use o repositório para inserir o usuário
                 _usuarioRepository.Insert(0, usuarioTest);
                 return Ok(usuarioTest);
@@ -68,14 +82,26 @@ namespace MaisEventosVsCode.Controllers
         /// Altera os dados de um Usuário
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="usuarioTests">Todas informações do Usuário</param>
+        /// <param name="usuarioTest">Todas informações do Usuário</param>
         /// <returns>Usuário Alterado</returns>
         [HttpPut("{id}")]
-        public IActionResult Atualizar(int id, UsuarioTest usuarioTests)
+        public IActionResult Atualizar(int id, [FromForm] UsuarioTest usuarioTest, IFormFile arquivo)
         {
             try
             {
-                var updateUsuarioTeste = _usuarioRepository.UpDate(id, usuarioTests);
+                #region Upload de Imagem
+                string[] extensoesPermitidas = { "jpeg", "jpg", "png", "svg" };
+                string uploadResultado = Upload.UploadFile(arquivo, extensoesPermitidas, "Images");
+
+                if (uploadResultado == "")
+                {
+                    return BadRequest("Arquivo não encontrado ou extenção não permitida");
+                }
+
+                usuarioTest.Imagem = uploadResultado;
+
+                #endregion           
+                var updateUsuarioTeste = _usuarioRepository.UpDate(id, usuarioTest);
                 return Ok(updateUsuarioTeste);
             }
             catch (System.Exception ex)
@@ -97,11 +123,19 @@ namespace MaisEventosVsCode.Controllers
         {
             try
             {
-               var DeletarUsuarioTeste = _usuarioRepository.Delete(id);
-               return Ok(DeletarUsuarioTeste);
+                bool exclusaoBemSucedida = _usuarioRepository.Delete(id);
+
+                if (exclusaoBemSucedida)
+                {
+                    return Ok("Usuário deletado com sucesso.");
+                }
+                else
+                {
+                    return NotFound("Usuário não encontrado com o ID fornecido.");
+                }
             }
             catch (System.Exception ex)
-            { 
+            {
                 return StatusCode(500, new
                 {
                     msg = "Falha na Conexão!",

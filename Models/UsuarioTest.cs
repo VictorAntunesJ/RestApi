@@ -22,5 +22,6 @@ namespace MaisEventosVsCode.Models
        [Required(ErrorMessage = "Informe sua Senha")]
         [MinLength(8)]
         public string senha { get; set; } = "senha123";
+        public string Imagem { get; set; }
     }
 }

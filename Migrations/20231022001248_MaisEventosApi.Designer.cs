@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MaisEventosVsCode.Migrations
 {
     [DbContext(typeof(MaisEventosVsCodeContextApi))]
-    [Migration("20231008144738_MaisEventosApi")]
+    [Migration("20231022001248_MaisEventosApi")]
     partial class MaisEventosApi
     {
         /// <inheritdoc />
@@ -32,13 +32,19 @@ namespace MaisEventosVsCode.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<string>("Imagem")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nome")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("senha")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
